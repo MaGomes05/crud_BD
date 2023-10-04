@@ -33,11 +33,11 @@ class Pedido:
                 json.dump(data, delete)
                 print("Pedido deletado")
     
-    def alterar_pedido(self):
+    def alterar_pedido(self, pedido_ID):
         with open("pedidos.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.pedido_ID in data:
+        if pedido_ID in data:
             # Solicitar ao usuário os novos dados
             self.data = input("Digite a nova data: ")
             self.endereco_id = input("Digite o novo ID do endereço: ")
@@ -49,7 +49,7 @@ class Pedido:
             self.status = input("Digite o novo status: ")
 
             # Atualizar os dados no dicionário do pedido
-            data[self.pedido_ID] = self.to_dict()
+            data[pedido_ID] = self.to_dict()
 
             # Reescrever os dados no arquivo JSON
             with open("pedidos.json", "w") as save:
@@ -107,11 +107,11 @@ class Livro:
                 data1 = json.dump(data, delete)
                 print("Livro deletado")
 
-    def alterar_livro(self):
+    def alterar_livro(self, livro_ID):
         with open("livros.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.livro_ID in data:
+        if livro_ID in data:
             # Solicitar ao usuário os novos dados
             self.titulo = input("Digite o novo título: ")
             self.ISBN = input("Digite o novo ISBN: ")
@@ -128,7 +128,7 @@ class Livro:
             self.autor_ID = input("Digite o novo autor: ")
 
             # Atualizar os dados no dicionário do livro
-            data[self.livro_ID] = self.to_dict()
+            data[livro_ID] = self.to_dict()
 
             # Reescrever os dados no arquivo JSON
             with open("livros.json", "w") as save:
@@ -184,11 +184,11 @@ class Cliente:
                 json.dump(data, delete)
                 print("Cliente deletado")
 
-    def alterar_cliente(self):
+    def alterar_cliente(self, cliente_ID):
         with open("clientes.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.cliente_ID in data:
+        if cliente_ID in data:
             # Solicitar ao usuário os novos dados
             self.CPF = input("Digite o novo CPF: ")
             self.nome = input("Digite o novo nome: ")
@@ -198,7 +198,7 @@ class Cliente:
             self.info_pagamento = input("Digite a nova forma de pagamento: ")
 
             # Atualizar os dados no dicionário do cliente
-            data[self.cliente_ID] = self.to_dict()
+            data[cliente_ID] = self.to_dict()
 
             # Reescrever os dados no arquivo JSON
             with open("clientes.json", "w") as save:
@@ -246,11 +246,11 @@ class Fornecedor:
                 json.dump(data, delete)
                 print("Fornecedor deletado")
 
-    def alterar_fornecedor(self):
+    def alterar_fornecedor(self, fornecedor_ID):
         with open("fornecedores.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.fornecedor_ID in data:
+        if fornecedor_ID in data:
             # Solicitar ao usuário os novos dados
             self.nome = input("Digite o novo nome: ")
             self.endereco_ID = input("Digite o novo ID do endereço: ")
@@ -259,7 +259,7 @@ class Fornecedor:
             self.info_pagamento = input("Digite a nova forma de pagamento: ")
 
             # Atualizar os dados no dicionário do fornecedor
-            data[self.fornecedor_ID] = self.to_dict()
+            data[fornecedor_ID] = self.to_dict()
 
             # Reescrever os dados no arquivo JSON
             with open("fornecedores.json", "w") as save:
@@ -306,11 +306,11 @@ class Editora:
                 json.dump(data, delete)
                 print("Editora deletada")
 
-    def alterar_editora(self):
+    def alterar_editora(self, publisher_ID):
         with open("editoras.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.publisher_ID in data:
+        if publisher_ID in data:
             # Solicitar ao usuário os novos dados
             self.nome = input("Digite o novo nome: ")
             self.endereco_ID = input("Digite o novo ID do endereço: ")
@@ -319,7 +319,7 @@ class Editora:
             self.registro = input("Digite o novo registro: ")
 
             # Atualizar os dados no dicionário da editora
-            data[self.publisher_ID] = self.to_dict()
+            data[publisher_ID] = self.to_dict()
 
             # Reescrever os dados no arquivo JSON
             with open("editoras.json", "w") as save:
@@ -365,11 +365,11 @@ class Autor:
                 json.dump(data, delete)
                 print("Autor deletado")
     
-    def alterar_autor(self):
+    def alterar_autor(self, autor_ID):
         with open("autores.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.autor_ID in data:
+        if autor_ID in data:
             # Solicitar ao usuário os novos dados
             self.nome = input("Digite o novo nome: ")
             self.nascimento = input("Digite a nova data de nascimento: ")
@@ -377,7 +377,7 @@ class Autor:
             self.biografia = input("Digite a nova biografia: ")
 
             # Atualizar os dados no dicionário do autor
-            data[self.autor_ID] = self.to_dict()
+            data[autor_ID] = self.to_dict()
 
             # Reescrever os dados no arquivo JSON
             with open("autores.json", "w") as save:
@@ -423,11 +423,11 @@ class Endereco:
                 json.dump(data, delete)
                 print("Endereço deletado")
 
-    def alterar_endereco(self):
+    def alterar_endereco(self, endereco_ID):
         with open("enderecos.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.endereco_ID in data:
+        if endereco_ID in data:
             # Solicitar ao usuário os novos dados
             self.rua = input("Digite a nova rua: ")
             self.bairro = input("Digite o novo bairro: ")
@@ -436,7 +436,7 @@ class Endereco:
             self.referencia = input("Digite o novo ponto de referência: ")
 
             # Atualizar os dados no dicionário do endereço
-            data[self.endereco_ID] = self.to_dict()
+            data[endereco_ID] = self.to_dict()
 
             # Reescrever os dados no arquivo JSON
             with open("enderecos.json", "w") as save:
