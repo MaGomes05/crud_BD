@@ -1,4 +1,5 @@
 import json
+#Pesquisa por nome em livro, cliente, fornecedor, editora e autor
 
 class Pedido:
     def __init__(self, pedido_ID, data, endereco_id, info_pagamento, data_envio, metodo_envio, taxa_envio, cod_rastreamento, status):
@@ -135,6 +136,41 @@ class Livro:
                 json.dump(data, save)
                 print("Livro atualizado com sucesso")
 
+    def pesquisar_livro_por_titulo(titulo):
+        with open("livros.json", "r") as getdata:
+            data = json.load(getdata)
+
+        livros_encontrados = []
+
+        for livro_id, livro_data in data.items():
+            if livro_data.get("titulo", "").lower() == titulo.lower():
+                livros_encontrados.append({
+                    "livro_ID": livro_id,
+                    **livro_data
+                })
+
+        if livros_encontrados:
+            if livros_encontrados:
+                print("Livros encontrados:")
+                for livro in livros_encontrados:
+                    print(f"ID do Livro: {livro['livro_ID']}")
+                    print(f"Título: {livro['titulo']}")
+                    print(f"ISBN: {livro['ISBN']}")
+                    print(f"Ano de Publicação: {livro['ano_publicacao']}")
+                    print(f"Gênero: {livro['genero_ID']}")
+                    print(f"Sinopse: {livro['sinopse']}")
+                    print(f"Preço: {livro['preco']}")
+                    print(f"Número de Páginas: {livro['num_paginas']}")
+                    print(f"Idioma: {livro['idioma']}")
+                    print(f"Classificação: {livro['classificacao']}")
+                    print(f"Estoque: {livro['estoque']}")
+                    print(f"Fornecedor ID: {livro['fornecedor_ID']}")
+                    print(f"Publisher ID: {livro['publisher_ID']}")
+                    print(f"Autor ID: {livro['autor_ID']}")
+            else:
+                print(f"Nenhum livro encontrado com esse titulo.")
+
+
     def to_dict(self):
         return {
             "livro_ID": self.livro_ID,
@@ -205,6 +241,32 @@ class Cliente:
                 json.dump(data, save)
                 print("Cliente atualizado com sucesso")
 
+    def pesquisar_cliente_por_nome(nome):
+        with open("clientes.json", "r") as getdata:
+            data = json.load(getdata)
+
+        clientes_encontrados = []
+
+        for cliente_id, cliente_data in data.items():
+            if cliente_data.get("nome", "").lower() == nome.lower():
+                clientes_encontrados.append({
+                    "cliente_ID": cliente_id,
+                    **cliente_data
+                })
+
+        if clientes_encontrados:
+            print("Clientes encontrados:")
+            for cliente in clientes_encontrados:
+                print(f"ID do Cliente: {cliente['cliente_ID']}")
+                print(f"CPF: {cliente['CPF']}")
+                print(f"Nome: {cliente['nome']}")
+                print(f"Endereço ID: {cliente['endereco_ID']}")
+                print(f"Telefone: {cliente['telefone']}")
+                print(f"Email: {cliente['email']}")
+                print(f"Forma de Pagamento: {cliente['info_pagamento']}")
+        else:
+            print(f"Nenhum cliente encontrado com esse nome.")
+
     def to_dict(self):
         return {
             "cliente_ID": self.cliente_ID,
@@ -266,6 +328,31 @@ class Fornecedor:
                 json.dump(data, save)
                 print("Fornecedor atualizado com sucesso")
 
+    def pesquisar_fornecedor_por_nome(nome):
+        with open("fornecedores.json", "r") as getdata:
+            data = json.load(getdata)
+
+        fornecedores_encontrados = []
+
+        for fornecedor_ID, fornecedor_data in data.items():
+            if fornecedor_data.get("nome", "").lower() == nome.lower():
+                fornecedores_encontrados.append({
+                    "fornecedor_ID": fornecedor_ID,
+                    **fornecedor_data
+                })
+
+        if fornecedores_encontrados:
+            print("Fornecedores encontrados:")
+            for fornecedor in fornecedores_encontrados:
+                print(f"ID do Fornecedor: {fornecedor['fornecedor_ID']}")
+                print(f"Nome: {fornecedor['nome']}")
+                print(f"Endereço ID: {fornecedor['endereco_ID']}")
+                print(f"Telefone: {fornecedor['telefone']}")
+                print(f"Email: {fornecedor['email']}")
+                print(f"Forma de Pagamento: {fornecedor['info_pagamento']}")
+        else:
+            print(f"Nenhum fornecedor encontrado com esse nome.")
+
     def to_dict(self):
         return {
             "fornecedor_ID": self.fornecedor_ID,
@@ -326,6 +413,31 @@ class Editora:
                 json.dump(data, save)
                 print("Editora atualizada com sucesso")
 
+    def pesquisar_editora_por_nome(nome):
+        with open("editoras.json", "r") as getdata:
+            data = json.load(getdata)
+
+        editoras_encontradas = []
+
+        for editora_id, editora_data in data.items():
+            if editora_data.get("nome", "").lower() == nome.lower():
+                editoras_encontradas.append({
+                    "publisher_ID": editora_id,
+                    **editora_data
+                })
+
+        if editoras_encontradas:
+            print("Editoras encontradas:")
+            for editora in editoras_encontradas:
+                print(f"ID da Editora: {editora['publisher_ID']}")
+                print(f"Nome: {editora['nome']}")
+                print(f"Endereço ID: {editora['endereco_ID']}")
+                print(f"Telefone: {editora['telefone']}")
+                print(f"Email: {editora['email']}")
+                print(f"Registro: {editora['registro']}")
+        else:
+            print(f"Nenhuma editora encontrada com esse nome'.")
+
     def to_dict(self):
         return {
             "publisher_ID": self.publisher_ID,
@@ -383,6 +495,30 @@ class Autor:
             with open("autores.json", "w") as save:
                 json.dump(data, save)
                 print("Autor atualizado com sucesso")
+
+    def pesquisar_autor_por_nome(nome):
+        with open("autores.json", "r") as getdata:
+            data = json.load(getdata)
+
+        autores_encontrados = []
+
+        for autor_id, autor_data in data.items():
+            if autor_data.get("nome", "").lower() == nome.lower():
+                autores_encontrados.append({
+                    "autor_ID": autor_id,
+                    **autor_data
+                })
+
+        if autores_encontrados:
+            print("Autores encontrados:")
+            for autor in autores_encontrados:
+                print(f"ID do Autor: {autor['autor_ID']}")
+                print(f"Nome: {autor['nome']}")
+                print(f"Nascimento: {autor['nascimento']}")
+                print(f"Nacionalidade: {autor['nacionalidade']}")
+                print(f"Biografia: {autor['biografia']}")
+        else:
+            print(f"Nenhum autor encontrado com o esse nome.")
 
     def to_dict(self):
         return {
@@ -452,3 +588,4 @@ class Endereco:
             "numero": self.numero,
             "referencia": self.referencia
         }
+
