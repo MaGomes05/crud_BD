@@ -22,12 +22,12 @@ class Pedido:
             json.dump(data, save)
             print("Pedido salvo")
     
-    def excluir_pedido(self):
+    def excluir_pedido(pedido_ID):
         with open("pedidos.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.pedido_ID in data:
-            data.pop(self.pedido_ID)
+        if pedido_ID in data:
+            data.pop(pedido_ID)
 
             with open("pedidos.json", "w") as delete:
                 json.dump(data, delete)
@@ -96,9 +96,7 @@ class Livro:
             json.dump(data, save)
             print("Livro salvo")
 
-    def excluir_livro(self):
-        livro_ID = input("Digite o ID do cliente: ")
-
+    def excluir_livro(livro_ID):
         with open("livros.json", "r") as getdata:
             data = json.load(getdata)
 
@@ -175,12 +173,12 @@ class Cliente:
             json.dump(data, save)
             print("Cliente salvo")
 
-    def excluir_cliente(self):
+    def excluir_cliente(cliente_ID):
         with open("clientes.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.cliente_ID in data:
-            data.pop(self.cliente_ID)
+        if cliente_ID in data:
+            data.pop(cliente_ID)
 
             with open("clientes.json", "w") as delete:
                 json.dump(data, delete)
@@ -237,12 +235,12 @@ class Fornecedor:
             json.dump(data, save)
             print("Fornecedor salvo")
 
-    def excluir_fornecedor(self):
+    def excluir_fornecedor(fornecedor_ID):
         with open("fornecedores.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.fornecedor_ID in data:
-            data.pop(self.fornecedor_ID)
+        if fornecedor_ID in data:
+            data.pop(fornecedor_ID)
 
             with open("fornecedores.json", "w") as delete:
                 json.dump(data, delete)
@@ -297,12 +295,12 @@ class Editora:
             json.dump(data, save)
             print("Editora salva")
 
-    def excluir_editora(self):
+    def excluir_editora(publisher_ID):
         with open("editoras.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.publisher_ID in data:
-            data.pop(self.publisher_ID)
+        if publisher_ID in data:
+            data.pop(publisher_ID)
 
             with open("editoras.json", "w") as delete:
                 json.dump(data, delete)
@@ -356,12 +354,12 @@ class Autor:
             json.dump(data, save)
             print("Autor salvo")
 
-    def excluir_autor(self):
+    def excluir_autor(autor_ID):
         with open("autores.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.autor_ID in data:
-            data.pop(self.autor_ID)
+        if autor_ID in data:
+            data.pop(autor_ID)
 
             with open("autores.json", "w") as delete:
                 json.dump(data, delete)
@@ -414,12 +412,12 @@ class Endereco:
             json.dump(data, save)
             print("Endereço salvo")
 
-    def excluir_endereco(self):
+    def excluir_endereco(endereco_ID):
         with open("enderecos.json", "r") as getdata:
             data = json.load(getdata)
 
-        if self.endereco_ID in data:
-            data.pop(self.endereco_ID)
+        if endereco_ID in data:
+            data.pop(endereco_ID)
 
             with open("enderecos.json", "w") as delete:
                 json.dump(data, delete)
@@ -454,4 +452,3 @@ class Endereco:
             "numero": self.numero,
             "referencia": self.referencia
         }
-
