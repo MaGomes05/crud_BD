@@ -1,168 +1,457 @@
 import json
 
-def add_data_livro():
+class Pedido:
+    def __init__(self, pedido_ID, data, endereco_id, info_pagamento, data_envio, metodo_envio, taxa_envio, cod_rastreamento, status):
+        self.pedido_ID = pedido_ID
+        self.data = data
+        self.endereco_id = endereco_id
+        self.info_pagamento = info_pagamento
+        self.data_envio = data_envio
+        self.metodo_envio = metodo_envio
+        self.taxa_envio = taxa_envio
+        self.cod_rastreamento = cod_rastreamento
+        self.status = status
+
+    def salvar_pedido(self):
+        with open("pedidos.json", "r") as getdata:
+            data = json.load(getdata)
+
+        data[self.pedido_ID] = self.to_dict()
+
+        with open("pedidos.json", "w") as save:
+            json.dump(data, save)
+            print("Pedido salvo")
     
-    livro_ID = input("Digite o ID do livro: ")
-    titulo = input("Digite o titulo: ")
-    ISBN = input("Digite o ISBN: ")
-    ano_publicacao = input("Digite o ano de publicacao: ")
-    genero_ID = input("Digite o genero: ")
-    sinopse = input("Digite a sinopse: ")
-    preco = input("Digite o preco: ")
-    num_paginas = input("Digite o numero de paginas: ")
-    idioma = input("Digite o idioma: ")
-    classificacao = input("Digite a classificacao: ")
-    estoque = input("Digite o estoque: ")
-    fornecedor_ID = input("Digite o fornecedor: ")
-    publisher_ID = input("Digite a editora: ")
-    autor_ID = input("Digite o autor: ")
+    def excluir_pedido(self):
+        with open("pedidos.json", "r") as getdata:
+            data = json.load(getdata)
 
-    dic = {
-        "livro_ID" : livro_ID,
-        "titulo" : titulo,
-        "ISBN" : ISBN,
-        "ano_publicacao" : ano_publicacao,
-        "genero_ID" : genero_ID,
-        "sinopse" : sinopse,
-        "preco" : preco,
-        "num_paginas" : num_paginas,
-        "idioma" : idioma,
-        "classificacao" : classificacao,
-        "estoque" : estoque,
-        "fornecedor_ID" : fornecedor_ID,
-        "publisher_ID" : publisher_ID,
-        "autor_ID" : autor_ID
-    }
+        if self.pedido_ID in data:
+            data.pop(self.pedido_ID)
 
-    with open("livros.json", "r") as getdata:
-        data = json.load(getdata)
+            with open("pedidos.json", "w") as delete:
+                json.dump(data, delete)
+                print("Pedido deletado")
+    
+    def alterar_pedido(self):
+        with open("pedidos.json", "r") as getdata:
+            data = json.load(getdata)
 
-        data[livro_ID] = dic
+        if self.pedido_ID in data:
+            # Solicitar ao usuário os novos dados
+            self.data = input("Digite a nova data: ")
+            self.endereco_id = input("Digite o novo ID do endereço: ")
+            self.info_pagamento = input("Digite a nova forma de pagamento: ")
+            self.data_envio = input("Digite a nova data de envio: ")
+            self.metodo_envio = input("Digite o novo método de envio: ")
+            self.taxa_envio = input("Digite a nova taxa de envio: ")
+            self.cod_rastreamento = input("Digite o novo código de rastreamento: ")
+            self.status = input("Digite o novo status: ")
+
+            # Atualizar os dados no dicionário do pedido
+            data[self.pedido_ID] = self.to_dict()
+
+            # Reescrever os dados no arquivo JSON
+            with open("pedidos.json", "w") as save:
+                json.dump(data, save)
+                print("Pedido atualizado com sucesso")
+    
+    def to_dict(self):
+        return {
+            "pedido_ID": self.pedido_ID,
+            "data": self.data,
+            "endereco_id": self.endereco_id,
+            "info_pagamento": self.info_pagamento,
+            "data_envio": self.data_envio,
+            "metodo_envio": self.metodo_envio,
+            "taxa_envio": self.taxa_envio,
+            "cod_rastreamento": self.cod_rastreamento,
+            "status": self.status
+        }
+
+class Livro:
+    def __init__(self, livro_ID, titulo, ISBN, ano_publicacao, genero_ID, sinopse, preco, num_paginas, idioma, classificacao, estoque, fornecedor_ID, publisher_ID, autor_ID):
+        self.livro_ID = livro_ID
+        self.titulo = titulo
+        self.ISBN = ISBN
+        self.ano_publicacao = ano_publicacao
+        self.genero_ID = genero_ID
+        self.sinopse = sinopse
+        self.preco = preco
+        self.num_paginas = num_paginas
+        self.idioma = idioma
+        self.classificacao = classificacao
+        self.estoque = estoque
+        self.fornecedor_ID = fornecedor_ID
+        self.publisher_ID = publisher_ID
+        self.autor_ID = autor_ID
+
+    def salvar_livro(self):
+        with open("livros.json", "r") as getdata:
+            data = json.load(getdata)
+
+        data[self.livro_ID] = self.to_dict()
 
         with open("livros.json", "w") as save:
             json.dump(data, save)
             print("Livro salvo")
 
-def add_data_cliente():
-    
-    cliente_ID = input("Digite o ID do cliente: ")
-    CPF = input("Digite o CPF: ")
-    nome = input("Digite o nome: ")
-    endereco_ID = input("Digite o endereco: ")
-    telefone = input("Digite o telefone: ")
-    email = input("Digite o email: ")
-    info_pagamento = input("Digite a forma de pagamento: ")
+    def excluir_livro(self):
+        livro_ID = input("Digite o ID do cliente: ")
 
-    dic = {
-        "cliente_ID" : cliente_ID,
-        "CPF" : CPF,
-        "nome" : nome,
-        "endereco_ID" : endereco_ID,
-        "telefone" : telefone,
-        "email" : email,
-        "info_pagamento" : info_pagamento
-    }
+        with open("livros.json", "r") as getdata:
+            data = json.load(getdata)
 
-    with open("clientes.json", "r") as getdata:
-        data = json.load(getdata)
+        if livro_ID in data:
+            data.pop(livro_ID)
 
-        data[cliente_ID] = dic
+            with open("livros.json", "w") as delete:
+                data1 = json.dump(data, delete)
+                print("Livro deletado")
+
+    def alterar_livro(self):
+        with open("livros.json", "r") as getdata:
+            data = json.load(getdata)
+
+        if self.livro_ID in data:
+            # Solicitar ao usuário os novos dados
+            self.titulo = input("Digite o novo título: ")
+            self.ISBN = input("Digite o novo ISBN: ")
+            self.ano_publicacao = input("Digite o novo ano de publicação: ")
+            self.genero_ID = input("Digite o novo gênero: ")
+            self.sinopse = input("Digite a nova sinopse: ")
+            self.preco = input("Digite o novo preço: ")
+            self.num_paginas = input("Digite o novo número de páginas: ")
+            self.idioma = input("Digite o novo idioma: ")
+            self.classificacao = input("Digite a nova classificação: ")
+            self.estoque = input("Digite o novo estoque: ")
+            self.fornecedor_ID = input("Digite o novo fornecedor: ")
+            self.publisher_ID = input("Digite a nova editora: ")
+            self.autor_ID = input("Digite o novo autor: ")
+
+            # Atualizar os dados no dicionário do livro
+            data[self.livro_ID] = self.to_dict()
+
+            # Reescrever os dados no arquivo JSON
+            with open("livros.json", "w") as save:
+                json.dump(data, save)
+                print("Livro atualizado com sucesso")
+
+    def to_dict(self):
+        return {
+            "livro_ID": self.livro_ID,
+            "titulo": self.titulo,
+            "ISBN": self.ISBN,
+            "ano_publicacao": self.ano_publicacao,
+            "genero_ID": self.genero_ID,
+            "sinopse": self.sinopse,
+            "preco": self.preco,
+            "num_paginas": self.num_paginas,
+            "idioma": self.idioma,
+            "classificacao": self.classificacao,
+            "estoque": self.estoque,
+            "fornecedor_ID": self.fornecedor_ID,
+            "publisher_ID": self.publisher_ID,
+            "autor_ID": self.autor_ID
+        }
+
+class Cliente:
+    def __init__(self, cliente_ID, CPF, nome, endereco_ID, telefone, email, info_pagamento):
+        self.cliente_ID = cliente_ID
+        self.CPF = CPF
+        self.nome = nome
+        self.endereco_ID = endereco_ID
+        self.telefone = telefone
+        self.email = email
+        self.info_pagamento = info_pagamento
+
+    def salvar_cliente(self):
+        with open("clientes.json", "r") as getdata:
+            data = json.load(getdata)
+
+        data[self.cliente_ID] = self.to_dict()
 
         with open("clientes.json", "w") as save:
             json.dump(data, save)
             print("Cliente salvo")
 
-def add_data_fornecedor():
-    
-    fornecedor_ID = input("Digite o ID do fornecedor: ")
-    nome = input("Digite o nome: ")
-    endereco_ID = input("Digite o endereco: ")
-    telefone = input("Digite o telefone: ")
-    email = input("Digite o email: ")
-    info_pagamento = input("Digite a forma de pagamento: ")
+    def excluir_cliente(self):
+        with open("clientes.json", "r") as getdata:
+            data = json.load(getdata)
 
-    dic = {
-        "fornecedor_ID" : fornecedor_ID,
-        "nome" : nome,
-        "endereco_ID" : endereco_ID,
-        "telefone" : telefone,
-        "email" : email,
-        "info_pagamento" : info_pagamento
-    }
+        if self.cliente_ID in data:
+            data.pop(self.cliente_ID)
 
-    with open("fornecedores.json", "r") as getdata:
-        data = json.load(getdata)
+            with open("clientes.json", "w") as delete:
+                json.dump(data, delete)
+                print("Cliente deletado")
 
-        data[fornecedor_ID] = dic
+    def alterar_cliente(self):
+        with open("clientes.json", "r") as getdata:
+            data = json.load(getdata)
+
+        if self.cliente_ID in data:
+            # Solicitar ao usuário os novos dados
+            self.CPF = input("Digite o novo CPF: ")
+            self.nome = input("Digite o novo nome: ")
+            self.endereco_ID = input("Digite o novo ID do endereço: ")
+            self.telefone = input("Digite o novo telefone: ")
+            self.email = input("Digite o novo email: ")
+            self.info_pagamento = input("Digite a nova forma de pagamento: ")
+
+            # Atualizar os dados no dicionário do cliente
+            data[self.cliente_ID] = self.to_dict()
+
+            # Reescrever os dados no arquivo JSON
+            with open("clientes.json", "w") as save:
+                json.dump(data, save)
+                print("Cliente atualizado com sucesso")
+
+    def to_dict(self):
+        return {
+            "cliente_ID": self.cliente_ID,
+            "CPF": self.CPF,
+            "nome": self.nome,
+            "endereco_ID": self.endereco_ID,
+            "telefone": self.telefone,
+            "email": self.email,
+            "info_pagamento": self.info_pagamento
+        }
+
+class Fornecedor:
+    def __init__(self, fornecedor_ID, nome, endereco_ID, telefone, email, info_pagamento):
+        self.fornecedor_ID = fornecedor_ID
+        self.nome = nome
+        self.endereco_ID = endereco_ID
+        self.telefone = telefone
+        self.email = email
+        self.info_pagamento = info_pagamento
+
+    def salvar_fornecedor(self):
+        with open("fornecedores.json", "r") as getdata:
+            data = json.load(getdata)
+
+        data[self.fornecedor_ID] = self.to_dict()
 
         with open("fornecedores.json", "w") as save:
             json.dump(data, save)
             print("Fornecedor salvo")
 
-def add_data_editora():
-    
-    publisher_ID = input("Digite o ID da editora: ")
-    nome = input("Digite o nome: ")
-    endereco_ID = input("Digite o endereco: ")
-    telefone = input("Digite o telefone: ")
-    email = input("Digite o email: ")
-    registro = input("Digite o registro: ")
+    def excluir_fornecedor(self):
+        with open("fornecedores.json", "r") as getdata:
+            data = json.load(getdata)
 
-    dic = {
-        "publisher_ID" : publisher_ID,
-        "nome" : nome,
-        "endereco_ID" : endereco_ID,
-        "telefone" : telefone,
-        "email" : email,
-        "registro" : registro
-    }
+        if self.fornecedor_ID in data:
+            data.pop(self.fornecedor_ID)
 
-    with open("editoras.json", "r") as getdata:
-        data = json.load(getdata)
+            with open("fornecedores.json", "w") as delete:
+                json.dump(data, delete)
+                print("Fornecedor deletado")
 
-        data[publisher_ID] = dic
+    def alterar_fornecedor(self):
+        with open("fornecedores.json", "r") as getdata:
+            data = json.load(getdata)
+
+        if self.fornecedor_ID in data:
+            # Solicitar ao usuário os novos dados
+            self.nome = input("Digite o novo nome: ")
+            self.endereco_ID = input("Digite o novo ID do endereço: ")
+            self.telefone = input("Digite o novo telefone: ")
+            self.email = input("Digite o novo email: ")
+            self.info_pagamento = input("Digite a nova forma de pagamento: ")
+
+            # Atualizar os dados no dicionário do fornecedor
+            data[self.fornecedor_ID] = self.to_dict()
+
+            # Reescrever os dados no arquivo JSON
+            with open("fornecedores.json", "w") as save:
+                json.dump(data, save)
+                print("Fornecedor atualizado com sucesso")
+
+    def to_dict(self):
+        return {
+            "fornecedor_ID": self.fornecedor_ID,
+            "nome": self.nome,
+            "endereco_ID": self.endereco_ID,
+            "telefone": self.telefone,
+            "email": self.email,
+            "info_pagamento": self.info_pagamento
+        }
+
+class Editora:
+    def __init__(self, publisher_ID, nome, endereco_ID, telefone, email, registro):
+        self.publisher_ID = publisher_ID
+        self.nome = nome
+        self.endereco_ID = endereco_ID
+        self.telefone = telefone
+        self.email = email
+        self.registro = registro
+
+    def salvar_editora(self):
+        with open("editoras.json", "r") as getdata:
+            data = json.load(getdata)
+
+        data[self.publisher_ID] = self.to_dict()
 
         with open("editoras.json", "w") as save:
             json.dump(data, save)
             print("Editora salva")
 
+    def excluir_editora(self):
+        with open("editoras.json", "r") as getdata:
+            data = json.load(getdata)
 
-def delete_data_livro():
-    livro_ID = input("Digite o ID do cliente: ")
+        if self.publisher_ID in data:
+            data.pop(self.publisher_ID)
 
-    with open("livros.json", "r") as getdata:
-        data = json.load(getdata)
+            with open("editoras.json", "w") as delete:
+                json.dump(data, delete)
+                print("Editora deletada")
 
-    if livro_ID in data:
-        data.pop(livro_ID)
+    def alterar_editora(self):
+        with open("editoras.json", "r") as getdata:
+            data = json.load(getdata)
 
-        with open("livros.json", "w") as delete:
-            data1 = json.dump(data, delete)
-            print("Livro deletado")
+        if self.publisher_ID in data:
+            # Solicitar ao usuário os novos dados
+            self.nome = input("Digite o novo nome: ")
+            self.endereco_ID = input("Digite o novo ID do endereço: ")
+            self.telefone = input("Digite o novo telefone: ")
+            self.email = input("Digite o novo email: ")
+            self.registro = input("Digite o novo registro: ")
 
-def delete_data_cliente():
-    cliente_ID = input("Digite o ID do cliente: ")
+            # Atualizar os dados no dicionário da editora
+            data[self.publisher_ID] = self.to_dict()
 
-    with open("clientes.json", "r") as getdata:
-        data = json.load(getdata)
+            # Reescrever os dados no arquivo JSON
+            with open("editoras.json", "w") as save:
+                json.dump(data, save)
+                print("Editora atualizada com sucesso")
 
-        if cliente_ID in data:
-            data.pop(cliente_ID)
+    def to_dict(self):
+        return {
+            "publisher_ID": self.publisher_ID,
+            "nome": self.nome,
+            "endereco_ID": self.endereco_ID,
+            "telefone": self.telefone,
+            "email": self.email,
+            "registro": self.registro
+        }
 
-            with open("clientes.json", "w") as delete:
-                data1 = json.dump(data, delete)
-                print("Cliente deletado")
+class Autor:
+    def __init__(self, autor_ID, nome, nascimento, nacionalidade, biografia):
+        self.autor_ID = autor_ID
+        self.nome = nome
+        self.nascimento = nascimento
+        self.nacionalidade = nacionalidade
+        self.biografia = biografia
 
-def delete_data_fornecedor():
-    fornecedor_ID = input("Digite o ID do fornecedor: ")
+    def salvar_autor(self):
+        with open("autores.json", "r") as getdata:
+            data = json.load(getdata)
 
-    with open("fornecedores.json", "r") as getdata:
-        data = json.load(getdata)
+        data[self.autor_ID] = self.to_dict()
 
-        if fornecedor_ID in data:
-            data.pop(fornecedor_ID)
+        with open("autores.json", "w") as save:
+            json.dump(data, save)
+            print("Autor salvo")
 
-            with open("fornecedores.json", "w") as delete:
-                data1 = json.dump(data, delete)
-                print("Fornecedor deletado")                
+    def excluir_autor(self):
+        with open("autores.json", "r") as getdata:
+            data = json.load(getdata)
+
+        if self.autor_ID in data:
+            data.pop(self.autor_ID)
+
+            with open("autores.json", "w") as delete:
+                json.dump(data, delete)
+                print("Autor deletado")
+    
+    def alterar_autor(self):
+        with open("autores.json", "r") as getdata:
+            data = json.load(getdata)
+
+        if self.autor_ID in data:
+            # Solicitar ao usuário os novos dados
+            self.nome = input("Digite o novo nome: ")
+            self.nascimento = input("Digite a nova data de nascimento: ")
+            self.nacionalidade = input("Digite a nova nacionalidade: ")
+            self.biografia = input("Digite a nova biografia: ")
+
+            # Atualizar os dados no dicionário do autor
+            data[self.autor_ID] = self.to_dict()
+
+            # Reescrever os dados no arquivo JSON
+            with open("autores.json", "w") as save:
+                json.dump(data, save)
+                print("Autor atualizado com sucesso")
+
+    def to_dict(self):
+        return {
+            "autor_ID": self.autor_ID,
+            "nome": self.nome,
+            "nascimento": self.nascimento,
+            "nacionalidade": self.nacionalidade,
+            "biografia": self.biografia
+        }
+
+class Endereco:
+    def __init__(self, endereco_ID, rua, bairro, CEP, numero, referencia):
+        self.endereco_ID = endereco_ID
+        self.rua = rua
+        self.bairro = bairro
+        self.CEP = CEP
+        self.numero = numero
+        self.referencia = referencia
+
+    def salvar_endereco(self):
+        with open("enderecos.json", "r") as getdata:
+            data = json.load(getdata)
+
+        data[self.endereco_ID] = self.to_dict()
+
+        with open("enderecos.json", "w") as save:
+            json.dump(data, save)
+            print("Endereço salvo")
+
+    def excluir_endereco(self):
+        with open("enderecos.json", "r") as getdata:
+            data = json.load(getdata)
+
+        if self.endereco_ID in data:
+            data.pop(self.endereco_ID)
+
+            with open("enderecos.json", "w") as delete:
+                json.dump(data, delete)
+                print("Endereço deletado")
+
+    def alterar_endereco(self):
+        with open("enderecos.json", "r") as getdata:
+            data = json.load(getdata)
+
+        if self.endereco_ID in data:
+            # Solicitar ao usuário os novos dados
+            self.rua = input("Digite a nova rua: ")
+            self.bairro = input("Digite o novo bairro: ")
+            self.CEP = input("Digite o novo CEP: ")
+            self.numero = input("Digite o novo número: ")
+            self.referencia = input("Digite o novo ponto de referência: ")
+
+            # Atualizar os dados no dicionário do endereço
+            data[self.endereco_ID] = self.to_dict()
+
+            # Reescrever os dados no arquivo JSON
+            with open("enderecos.json", "w") as save:
+                json.dump(data, save)
+                print("Endereço atualizado com sucesso")
+
+    def to_dict(self):
+        return {
+            "endereco_ID": self.endereco_ID,
+            "rua": self.rua,
+            "bairro": self.bairro,
+            "CEP": self.CEP,
+            "numero": self.numero,
+            "referencia": self.referencia
+        }
 
